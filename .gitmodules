@@ -1,0 +1,3 @@
+[submodule "GamePlay"]
+	path = GamePlay
+	url = git://github.com/blackberry/GamePlay.git
