@@ -11,6 +11,6 @@ Make sure to get the submodule [GamePlay 3D](https://github.com/blackberry/GameP
 Within GamePlay, compile both gameplay-encoder (Visual Studio project file located within gameplay-encoder folder)
 
 Next, compile GamePlay itself. A Visual Studio solution file is located in the root of the GamePlay directory. You only need to compile the gameplay project itself, though feel free to play with the sample projects.
-# Remember to compile both Debug and Release builds
+### Remember to compile both Debug and Release builds
 
 Now you can go into Code/StevensRPG and compile the project to run it
