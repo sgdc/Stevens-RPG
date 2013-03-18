@@ -4,7 +4,7 @@
 Main game;
 
 Main::Main()
-    : _scene(NULL)
+	: _scene(NULL), _tilesheet(NULL), _cameraMovement()
 {
 }
 
@@ -28,21 +28,34 @@ void Main::initialize()
 	//Setup tilesheet
 	Texture* tilesheetTex = Texture::create("res/textures/tilesheet-v1.png");
 	_tilesheet = TileSheet::create("game_tileSheet", tilesheetTex);
+	Texture::Sampler* sampler = _tilesheet->getSpriteBatch()->getSampler();
+	sampler->setFilterMode(Texture::NEAREST, Texture::NEAREST);
+	sampler->setWrapMode(Texture::REPEAT, Texture::REPEAT);
 
 	//Setup sprite
 	Node* spriteNode = Node::create();
 
 	Sprite* sprite = Sprite::create("grass", _tilesheet);
 	sprite->setDefaultTile(Rectangle(0, 0, 16, 16));
-	sprite->setSpriteSize(16, 16);
-	sprite->setSpriteOffset(-(sprite->getSpriteSize() * 0.5));
+	sprite->setSpriteSize(64, 64);
+	sprite->setSpriteOffset(-(Vector2(getWidth(), getHeight()) * 0.5));
 
 	spriteNode->setSprite(sprite);
 
 	_scene->addNode(spriteNode);
 
-	SAFE_RELEASE(sprite);
+	for(int i = 0; i < ceilf(getWidth() / sprite->getSpriteWidth()); i++)
+	{
+		Node* spriteNodeClone = spriteNode->clone();
+		SAFE_RELEASE(spriteNode);
+		spriteNode = spriteNodeClone;
+
+		spriteNode->translate(sprite->getSpriteWidth(), 0, 0);
+
+		_scene->addNode(spriteNode);
+	}
 	SAFE_RELEASE(spriteNode);
+	SAFE_RELEASE(sprite);
 	SAFE_RELEASE(tilesheetTex);
 }
 
@@ -55,6 +68,7 @@ void Main::finalize()
 void Main::update(float elapsedTime)
 {
 	//TODO
+	_scene->getActiveCamera()->getNode()->translate(_cameraMovement * elapsedTime);
 }
 
 void Main::render(float elapsedTime)
@@ -63,7 +77,13 @@ void Main::render(float elapsedTime)
     clear(CLEAR_COLOR_DEPTH, Vector4::zero(), 1.0f, 0);
 
     // Visit all the nodes in the scene for drawing
+	_tilesheet->getSpriteBatch()->start();
+
+	_tilesheet->getSpriteBatch()->setProjectionMatrix(_scene->getActiveCamera()->getViewProjectionMatrix());
+
     _scene->visit(this, &Main::drawScene);
+
+	_tilesheet->getSpriteBatch()->finish();
 }
 
 bool Main::drawScene(Node* node)
@@ -72,10 +92,12 @@ bool Main::drawScene(Node* node)
 	Sprite* sprite = node->getSprite();
 	if(sprite)
 	{
-		sprite->draw();
+		sprite->draw(false);
 	}
 	return true;
 }
+
+#define MOVEMENT_DELTA 1
 
 void Main::keyEvent(Keyboard::KeyEvent evt, int key)
 {
@@ -83,22 +105,80 @@ void Main::keyEvent(Keyboard::KeyEvent evt, int key)
     {
         switch (key)
         {
-        case Keyboard::KEY_ESCAPE:
-            exit();
-            break;
+			case Keyboard::KEY_ESCAPE:
+				exit();
+				break;
+			case Keyboard::KEY_DOWN_ARROW:
+				_cameraMovement.y -= MOVEMENT_DELTA;
+				break;
+			case Keyboard::KEY_UP_ARROW:
+				_cameraMovement.y += MOVEMENT_DELTA;
+				break;
+			case Keyboard::KEY_LEFT_ARROW:
+				_cameraMovement.x -= MOVEMENT_DELTA;
+				break;
+			case Keyboard::KEY_RIGHT_ARROW:
+				_cameraMovement.x += MOVEMENT_DELTA;
+				break;
+			case Keyboard::KEY_R:
+				_scene->visit(this, &Main::rotateLeft);
+				break;
+			case Keyboard::KEY_E:
+				_scene->visit(this, &Main::rotateRight);
+				break;
         }
     }
+	else if (evt == Keyboard::KEY_RELEASE)
+    {
+        switch (key)
+        {
+			case Keyboard::KEY_DOWN_ARROW:
+				_cameraMovement.y += MOVEMENT_DELTA;
+				break;
+			case Keyboard::KEY_UP_ARROW:
+				_cameraMovement.y -= MOVEMENT_DELTA;
+				break;
+			case Keyboard::KEY_LEFT_ARROW:
+				_cameraMovement.x += MOVEMENT_DELTA;
+				break;
+			case Keyboard::KEY_RIGHT_ARROW:
+				_cameraMovement.x -= MOVEMENT_DELTA;
+				break;
+        }
+    }
+}
+
+bool Main::rotateLeft(Node* node)
+{
+	//Draw the sprite if it exists
+	Sprite* sprite = node->getSprite();
+	if(sprite)
+	{
+		node->rotateZ(MATH_DEG_TO_RAD(10.0f));
+	}
+	return true;
+}
+
+bool Main::rotateRight(Node* node)
+{
+	//Draw the sprite if it exists
+	Sprite* sprite = node->getSprite();
+	if(sprite)
+	{
+		node->rotateZ(MATH_DEG_TO_RAD(-10.0f));
+	}
+	return true;
 }
 
 void Main::touchEvent(Touch::TouchEvent evt, int x, int y, unsigned int contactIndex)
 {
     switch (evt)
     {
-    case Touch::TOUCH_PRESS:
-        break;
-    case Touch::TOUCH_RELEASE:
-        break;
-    case Touch::TOUCH_MOVE:
-        break;
+		case Touch::TOUCH_PRESS:
+			break;
+		case Touch::TOUCH_RELEASE:
+			break;
+		case Touch::TOUCH_MOVE:
+			break;
     };
 }

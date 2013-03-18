@@ -56,8 +56,12 @@ private:
      */
     bool drawScene(Node* node);
 
+	bool rotateLeft(Node* node);
+	bool rotateRight(Node* node);
+
     Scene* _scene;
 	TileSheet* _tilesheet;
+	Vector3 _cameraMovement;
 };
 
 #endif
