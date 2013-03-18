@@ -10,7 +10,7 @@ Make sure to get the submodule [GamePlay 3D](https://github.com/rcmaniac25/GameP
 
 If you can't get the submodule, run around in circles until someone questions what you are doing and has the potential to help get a git submodule.
 
-Switch to the "next" branch of GamePlay. This is usually bad practice for a production game, but the framework is being worked on while the game is being worked on.
+Switch to the "twoD_additions" branch of GamePlay. This is usually bad practice for a production game, but the framework is being worked on while the game is being worked on.
 
 Within GamePlay, compile gameplay-encoder (Visual Studio project file located within gameplay-encoder folder) with FBX support.
 

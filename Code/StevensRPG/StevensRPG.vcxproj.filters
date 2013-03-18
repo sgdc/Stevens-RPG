@@ -5,25 +5,16 @@
     </Filter>
     <Filter Include="src">
     </Filter>
+    <Filter Include="res\textures">
+      <UniqueIdentifier>{12973e79-320e-40d5-b201-f52f363fe8ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-	<None Include="game.config" />
+    <None Include="game.config" />
     <None Include="icon.png" />
     <None Include="bar-descriptor.xml" />
-    <None Include="res\box.dae">
-      <Filter>res</Filter>
-    </None>
-    <None Include="res\box.gpb">
-      <Filter>res</Filter>
-    </None>
-    <None Include="res\box.material">
-      <Filter>res</Filter>
-    </None>
-    <None Include="res\colored.frag">
-      <Filter>res</Filter>
-    </None>
-    <None Include="res\colored.vert">
-      <Filter>res</Filter>
+    <None Include="res\textures\tilesheet-v1.png">
+      <Filter>res\textures</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

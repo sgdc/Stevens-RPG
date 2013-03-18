@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StevensRPG", "StevensRPG.vcxproj", "{1035C7B0-071A-B73F-3EAC-FB82AF9EFD4B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StevensRPG", "StevensRPG.vcxproj", "{6718CE39-AC2D-F2DC-DE45-41F923132BD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,18 +13,18 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1035C7B0-071A-B73F-3EAC-FB82AF9EFD4B}.Debug|Win32.ActiveCfg = Debug|Win32
-		{1035C7B0-071A-B73F-3EAC-FB82AF9EFD4B}.Debug|Win32.Build.0 = Debug|Win32
-		{1035C7B0-071A-B73F-3EAC-FB82AF9EFD4B}.Debug|x64.ActiveCfg = Debug|x64
-		{1035C7B0-071A-B73F-3EAC-FB82AF9EFD4B}.Debug|x64.Build.0 = Debug|x64
-		{1035C7B0-071A-B73F-3EAC-FB82AF9EFD4B}.DebugMem|Win32.ActiveCfg = DebugMem|Win32
-		{1035C7B0-071A-B73F-3EAC-FB82AF9EFD4B}.DebugMem|Win32.Build.0 = DebugMem|Win32
-		{1035C7B0-071A-B73F-3EAC-FB82AF9EFD4B}.DebugMem|x64.ActiveCfg = DebugMem|x64
-		{1035C7B0-071A-B73F-3EAC-FB82AF9EFD4B}.DebugMem|x64.Build.0 = DebugMem|x64
-		{1035C7B0-071A-B73F-3EAC-FB82AF9EFD4B}.Release|Win32.ActiveCfg = Release|Win32
-		{1035C7B0-071A-B73F-3EAC-FB82AF9EFD4B}.Release|Win32.Build.0 = Release|Win32
-		{1035C7B0-071A-B73F-3EAC-FB82AF9EFD4B}.Release|x64.ActiveCfg = Release|x64
-		{1035C7B0-071A-B73F-3EAC-FB82AF9EFD4B}.Release|x64.Build.0 = Release|x64
+		{6718CE39-AC2D-F2DC-DE45-41F923132BD0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6718CE39-AC2D-F2DC-DE45-41F923132BD0}.Debug|Win32.Build.0 = Debug|Win32
+		{6718CE39-AC2D-F2DC-DE45-41F923132BD0}.Debug|x64.ActiveCfg = Debug|x64
+		{6718CE39-AC2D-F2DC-DE45-41F923132BD0}.Debug|x64.Build.0 = Debug|x64
+		{6718CE39-AC2D-F2DC-DE45-41F923132BD0}.DebugMem|Win32.ActiveCfg = DebugMem|Win32
+		{6718CE39-AC2D-F2DC-DE45-41F923132BD0}.DebugMem|Win32.Build.0 = DebugMem|Win32
+		{6718CE39-AC2D-F2DC-DE45-41F923132BD0}.DebugMem|x64.ActiveCfg = DebugMem|x64
+		{6718CE39-AC2D-F2DC-DE45-41F923132BD0}.DebugMem|x64.Build.0 = DebugMem|x64
+		{6718CE39-AC2D-F2DC-DE45-41F923132BD0}.Release|Win32.ActiveCfg = Release|Win32
+		{6718CE39-AC2D-F2DC-DE45-41F923132BD0}.Release|Win32.Build.0 = Release|Win32
+		{6718CE39-AC2D-F2DC-DE45-41F923132BD0}.Release|x64.ActiveCfg = Release|x64
+		{6718CE39-AC2D-F2DC-DE45-41F923132BD0}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

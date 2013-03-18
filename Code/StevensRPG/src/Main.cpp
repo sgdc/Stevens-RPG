@@ -10,36 +10,51 @@ Main::Main()
 
 void Main::initialize()
 {
-    // Load game scene from file
-    Bundle* bundle = Bundle::create("res/box.gpb");
-    _scene = bundle->loadScene();
-    SAFE_RELEASE(bundle);
+	//Create the scene
+	_scene = Scene::create("game_scene");
 
-    // Set the aspect ratio for the scene's camera to match the current resolution
-    _scene->getActiveCamera()->setAspectRatio((float)getWidth() / (float)getHeight());
-    
-    // Get light node
-    Node* lightNode = _scene->findNode("directionalLight");
-    Light* light = lightNode->getLight();
+	//Setup camera
+	Node* camNode = Node::create("Cam_Node");
+	Camera* cam = Camera::createOrthographic(getWidth(), getHeight(), getAspectRatio(), 0, 1);
 
-    // Initialize box model
-    Node* boxNode = _scene->findNode("box");
-    Model* boxModel = boxNode->getModel();
-    Material* boxMaterial = boxModel->setMaterial("res/box.material");
-    boxMaterial->getParameter("u_ambientColor")->setValue(_scene->getAmbientColor());
-    boxMaterial->getParameter("u_lightColor")->setValue(light->getColor());
-    boxMaterial->getParameter("u_lightDirection")->setValue(lightNode->getForwardVectorView());
+	camNode->setCamera(cam);
+
+	_scene->addNode(camNode);
+	_scene->setActiveCamera(cam);
+
+	SAFE_RELEASE(cam);
+	SAFE_RELEASE(camNode);
+
+	//Setup tilesheet
+	Texture* tilesheetTex = Texture::create("res/textures/tilesheet-v1.png");
+	_tilesheet = TileSheet::create("game_tileSheet", tilesheetTex);
+
+	//Setup sprite
+	Node* spriteNode = Node::create();
+
+	Sprite* sprite = Sprite::create("grass", _tilesheet);
+	sprite->setDefaultTile(Rectangle(0, 0, 16, 16));
+	sprite->setSpriteSize(16, 16);
+	sprite->setSpriteOffset(-(sprite->getSpriteSize() * 0.5));
+
+	spriteNode->setSprite(sprite);
+
+	_scene->addNode(spriteNode);
+
+	SAFE_RELEASE(sprite);
+	SAFE_RELEASE(spriteNode);
+	SAFE_RELEASE(tilesheetTex);
 }
 
 void Main::finalize()
 {
     SAFE_RELEASE(_scene);
+	SAFE_RELEASE(_tilesheet);
 }
 
 void Main::update(float elapsedTime)
 {
-    // Rotate model
-    _scene->findNode("box")->rotateY(MATH_DEG_TO_RAD((float)elapsedTime / 1000.0f * 180.0f));
+	//TODO
 }
 
 void Main::render(float elapsedTime)
@@ -53,13 +68,13 @@ void Main::render(float elapsedTime)
 
 bool Main::drawScene(Node* node)
 {
-    // If the node visited contains a model, draw it
-    Model* model = node->getModel(); 
-    if (model)
-    {
-        model->draw();
-    }
-    return true;
+	//Draw the sprite if it exists
+	Sprite* sprite = node->getSprite();
+	if(sprite)
+	{
+		sprite->draw();
+	}
+	return true;
 }
 
 void Main::keyEvent(Keyboard::KeyEvent evt, int key)
