@@ -10,6 +10,9 @@ Main::Main()
 
 void Main::initialize()
 {
+	//Set default sprite offset
+	Sprite::setDefaultSpriteOffset(-(Vector2(getWidth(), getHeight()) * 0.5f));
+
 	//Create the scene
 	_scene = Scene::create("game_scene");
 
@@ -36,21 +39,20 @@ void Main::initialize()
 	Node* spriteNode = Node::create();
 
 	Sprite* sprite = Sprite::create("grass", _tilesheet);
-	sprite->setDefaultTile(Rectangle(0, 0, 16, 16));
-	sprite->setSpriteSize(64, 64);
-	sprite->setSpriteOffset(-(Vector2(getWidth(), getHeight()) * 0.5));
+	sprite->setDefaultTile(Rectangle(16, 16));
+	sprite->setSize(64, 64);
 
 	spriteNode->setSprite(sprite);
 
 	_scene->addNode(spriteNode);
 
-	for(int i = 0; i < ceilf(getWidth() / sprite->getSpriteWidth()); i++)
+	for(int i = 0; i < ceilf(getWidth() / sprite->getWidth()); i++)
 	{
 		Node* spriteNodeClone = spriteNode->clone();
 		SAFE_RELEASE(spriteNode);
 		spriteNode = spriteNodeClone;
 
-		spriteNode->translate(sprite->getSpriteWidth(), 0, 0);
+		spriteNode->translate(sprite->getWidth(), 0, 0);
 
 		_scene->addNode(spriteNode);
 	}
