@@ -51,6 +51,8 @@ protected:
 
 private:
 
+	void setupAnimation(Sprite* sprite);
+
     /**
      * Draws the scene each frame.
      */

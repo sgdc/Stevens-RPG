@@ -8,6 +8,11 @@ Main::Main()
 {
 }
 
+void Main::setupAnimation(Sprite* sprite)
+{
+	//TODO
+}
+
 void Main::initialize()
 {
 	//Set default sprite offset
@@ -41,6 +46,7 @@ void Main::initialize()
 	Sprite* sprite = Sprite::create("grass", _tilesheet);
 	sprite->setDefaultTile(Rectangle(16, 16));
 	sprite->setSize(64, 64);
+	setupAnimation(sprite);
 
 	spriteNode->setSprite(sprite);
 
@@ -70,13 +76,16 @@ void Main::finalize()
 void Main::update(float elapsedTime)
 {
 	//TODO
-	_scene->getActiveCamera()->getNode()->translate(_cameraMovement * elapsedTime);
+	if(!_cameraMovement.isZero() && elapsedTime != 0)
+	{
+		_scene->getActiveCamera()->getNode()->translate(_cameraMovement * elapsedTime);
+	}
 }
 
 void Main::render(float elapsedTime)
 {
     // Clear the color and depth buffers
-    clear(CLEAR_COLOR_DEPTH, Vector4::zero(), 1.0f, 0);
+	clear(CLEAR_COLOR_DEPTH, Vector4::zero(), 1.0f, 0);
 
     // Visit all the nodes in the scene for drawing
 	_tilesheet->getSpriteBatch()->start();
@@ -105,6 +114,7 @@ void Main::keyEvent(Keyboard::KeyEvent evt, int key)
 {
     if (evt == Keyboard::KEY_PRESS)
     {
+		Sprite* sprite;
         switch (key)
         {
 			case Keyboard::KEY_ESCAPE:
@@ -127,6 +137,34 @@ void Main::keyEvent(Keyboard::KeyEvent evt, int key)
 				break;
 			case Keyboard::KEY_E:
 				_scene->visit(this, &Main::rotateRight);
+				break;
+			case Keyboard::KEY_V:
+				sprite = _scene->getFirstNode()->getNextSibling()->getSprite();
+				if(sprite)
+				{
+					if((sprite->getFlip() & Sprite::FLIP_VERT) == Sprite::FLIP_VERT)
+					{
+						sprite->setFlip(sprite->getFlip() & ~Sprite::FLIP_VERT);
+					}
+					else
+					{
+						sprite->setFlip(sprite->getFlip() | Sprite::FLIP_VERT);
+					}
+				}
+				break;
+			case Keyboard::KEY_H:
+				sprite = _scene->getFirstNode()->getNextSibling()->getSprite();
+				if(sprite)
+				{
+					if((sprite->getFlip() & Sprite::FLIP_HORZ) == Sprite::FLIP_HORZ)
+					{
+						sprite->setFlip(sprite->getFlip() & ~Sprite::FLIP_HORZ);
+					}
+					else
+					{
+						sprite->setFlip(sprite->getFlip() | Sprite::FLIP_HORZ);
+					}
+				}
 				break;
         }
     }
