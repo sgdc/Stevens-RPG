@@ -10,7 +10,63 @@ Main::Main()
 
 void Main::setupAnimation(Sprite* sprite)
 {
-	//TODO
+	//Size and offset
+	unsigned int times[] = {0, 200, 400};
+	float size_values[] = {64, 64, 128, 128, 64, 64};
+	float offset_values[6] = {sprite->getOffsetX(), sprite->getOffsetY()};
+	offset_values[2] = offset_values[0] - (size_values[2] - size_values[0]) / 2.0f;
+	offset_values[3] = offset_values[1] - (size_values[3] - size_values[1]) / 2.0f;
+	offset_values[4] = offset_values[0];
+	offset_values[5] = offset_values[1];
+
+	sprite->createAnimation("animate_sprite_size", Sprite::ANIMATE_SIZE, 3, times, size_values, Curve::SMOOTH)->getClip()->setRepeatCount(AnimationClip::REPEAT_INDEFINITE);
+
+	sprite->createAnimation("animate_sprite_offset", Sprite::ANIMATE_OFFSET, 3, times, offset_values, Curve::SMOOTH)->getClip()->setRepeatCount(AnimationClip::REPEAT_INDEFINITE);
+
+	//Specific frames
+	unsigned int animate_times[] = {0, 100, 200, 300, 400, 500, 600, 700, 800};
+	float animate1_values[] = {
+		96, 0, 16, 16,
+		112, 0, 16, 16,
+		128, 0, 16, 16,
+		144, 0, 16, 16,
+		160, 0, 16, 16,
+		144, 0, 16, 16,
+		128, 0, 16, 16,
+		112, 0, 16, 16
+	};
+	sprite->createAnimation("animate_sprite_specific", Sprite::ANIMATE_FRAME_SPECIFIC, 9, animate_times, animate1_values, Curve::STEP)->getClip()->setRepeatCount(AnimationClip::REPEAT_INDEFINITE);
+
+	//Indexed frames
+	TileSheet* tileSheet = sprite->getTileSheet();
+	unsigned int index = tileSheet->addStrip("lava1", 5);
+	tileSheet->setStripFrame(index, 0, Rectangle(96, 0, 16, 16));
+	tileSheet->setStripFrame(index, 1, Rectangle(112, 0, 16, 16));
+	tileSheet->setStripFrame(index, 2, Rectangle(128, 0, 16, 16));
+	tileSheet->setStripFrame(index, 3, Rectangle(144, 0, 16, 16));
+	tileSheet->setStripFrame(index, 4, Rectangle(160, 0, 16, 16));
+
+	index = tileSheet->addStrip("lava2", 5);
+	tileSheet->setStripFrame(index, 0, Rectangle(176, 0, 16, 16));
+	tileSheet->setStripFrame(index, 1, Rectangle(192, 0, 16, 16));
+	tileSheet->setStripFrame(index, 2, Rectangle(208, 0, 16, 16));
+	tileSheet->setStripFrame(index, 3, Rectangle(224, 0, 16, 16));
+	tileSheet->setStripFrame(index, 4, Rectangle(240, 0, 16, 16));
+
+#define ANIMATE_INDEX 0
+
+	float animate2_values[] = {
+		ANIMATE_INDEX, 0,
+		ANIMATE_INDEX, 1,
+		ANIMATE_INDEX, 2,
+		ANIMATE_INDEX, 3,
+		ANIMATE_INDEX, 4,
+		ANIMATE_INDEX, 3,
+		ANIMATE_INDEX, 2,
+		ANIMATE_INDEX, 1
+	};
+
+	sprite->createAnimation("animate_sprite_index", Sprite::ANIMATE_FRAME_INDEX, 9, animate_times, animate2_values, Curve::STEP)->getClip()->setRepeatCount(AnimationClip::REPEAT_INDEFINITE);
 }
 
 void Main::initialize()
@@ -40,10 +96,41 @@ void Main::initialize()
 	sampler->setFilterMode(Texture::NEAREST, Texture::NEAREST);
 	sampler->setWrapMode(Texture::REPEAT, Texture::REPEAT);
 
-	//Setup sprite
+	//Setup map
 	Node* spriteNode = Node::create();
 
-	Sprite* sprite = Sprite::create("grass", _tilesheet);
+	SpriteGroup* map = SpriteGroup::create("grass_map", 100, 100, _tilesheet);
+	map->setDefaultTile(Rectangle(16, 16));
+	map->setSize(64, 64);
+	//map->setHorzGap(10);
+	//map->setVertGap(10);
+	//setupAnimation(static_cast<Sprite*>(map));
+
+	spriteNode->setSprite(static_cast<Sprite*>(map));
+
+	_scene->addNode(spriteNode);
+	
+	//Setup lava
+	Sprite* sprite = Sprite::create("lava", _tilesheet);
+	_aniSprite = sprite;
+	sprite->setSize(64, 64);
+	setupAnimation(sprite);
+	sprite->setDefaultTile(_tilesheet->getStripFrame("lava1", 1));
+
+	map->setSpriteType(3, 3, SpriteGroup::TYPE_TRANSPARENT);
+	map->setSpriteType(3, 4, SpriteGroup::TYPE_TRANSPARENT);
+	map->setSpriteType(4, 3, SpriteGroup::TYPE_TRANSPARENT);
+	map->setSpriteType(4, 4, SpriteGroup::TYPE_TRANSPARENT);
+	map->setSprite(2, 2, sprite);
+	map->setSprite(2, 3, sprite);
+	map->setSprite(2, 4, sprite);
+	map->setSprite(3, 2, sprite);
+	map->setSprite(4, 2, sprite);
+
+	SAFE_RELEASE(sprite);
+	SAFE_RELEASE(map);
+
+	/*Sprite* sprite = Sprite::create("grass", _tilesheet);
 	sprite->setDefaultTile(Rectangle(16, 16));
 	sprite->setSize(64, 64);
 	setupAnimation(sprite);
@@ -62,8 +149,8 @@ void Main::initialize()
 
 		_scene->addNode(spriteNode);
 	}
+	SAFE_RELEASE(sprite);*/
 	SAFE_RELEASE(spriteNode);
-	SAFE_RELEASE(sprite);
 	SAFE_RELEASE(tilesheetTex);
 }
 
@@ -88,13 +175,11 @@ void Main::render(float elapsedTime)
 	clear(CLEAR_COLOR_DEPTH, Vector4::zero(), 1.0f, 0);
 
     // Visit all the nodes in the scene for drawing
-	_tilesheet->getSpriteBatch()->start();
-
-	_tilesheet->getSpriteBatch()->setProjectionMatrix(_scene->getActiveCamera()->getViewProjectionMatrix());
+	_tilesheet->startBatch(_scene->getActiveCamera(), true);
 
     _scene->visit(this, &Main::drawScene);
 
-	_tilesheet->getSpriteBatch()->finish();
+	_tilesheet->finishBatch();
 }
 
 bool Main::drawScene(Node* node)
@@ -103,7 +188,7 @@ bool Main::drawScene(Node* node)
 	Sprite* sprite = node->getSprite();
 	if(sprite)
 	{
-		sprite->draw(false);
+		sprite->draw(sprite->getTileSheet() != _tilesheet);
 	}
 	return true;
 }
@@ -166,6 +251,13 @@ void Main::keyEvent(Keyboard::KeyEvent evt, int key)
 					}
 				}
 				break;
+			case Keyboard::KEY_A:
+				//sprite = _scene->getFirstNode()->getNextSibling()->getSprite();
+				if(_aniSprite)
+				{
+					_aniSprite->getAnimation("animate_sprite_index")->play();
+				}
+				break;
         }
     }
 	else if (evt == Keyboard::KEY_RELEASE)
@@ -194,7 +286,7 @@ bool Main::rotateLeft(Node* node)
 	Sprite* sprite = node->getSprite();
 	if(sprite)
 	{
-		node->rotateZ(MATH_DEG_TO_RAD(10.0f));
+		node->rotateZ(MATH_DEG_TO_RAD(1.0f));
 	}
 	return true;
 }
@@ -205,7 +297,7 @@ bool Main::rotateRight(Node* node)
 	Sprite* sprite = node->getSprite();
 	if(sprite)
 	{
-		node->rotateZ(MATH_DEG_TO_RAD(-10.0f));
+		node->rotateZ(MATH_DEG_TO_RAD(-1.0f));
 	}
 	return true;
 }

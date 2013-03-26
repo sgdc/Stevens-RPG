@@ -64,6 +64,7 @@ private:
     Scene* _scene;
 	TileSheet* _tilesheet;
 	Vector3 _cameraMovement;
+	Sprite* _aniSprite;
 };
 
 #endif
