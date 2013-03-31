@@ -12,60 +12,28 @@ void Main::setupAnimation(Sprite* sprite)
 {
 	//Size and offset
 	unsigned int times[] = {0, 200, 400};
-	float size_values[] = {64, 64, 128, 128, 64, 64};
 	float offset_values[6] = {sprite->getOffsetX(), sprite->getOffsetY()};
-	offset_values[2] = offset_values[0] - (size_values[2] - size_values[0]) / 2.0f;
-	offset_values[3] = offset_values[1] - (size_values[3] - size_values[1]) / 2.0f;
+	offset_values[2] = offset_values[0] - ((sprite->getWidth() * 2) - sprite->getWidth()) / 2.0f;
+	offset_values[3] = offset_values[1] - ((sprite->getHeight() * 2) - sprite->getHeight()) / 2.0f;
 	offset_values[4] = offset_values[0];
 	offset_values[5] = offset_values[1];
 
-	sprite->createAnimation("animate_sprite_size", Sprite::ANIMATE_SIZE, 3, times, size_values, Curve::SMOOTH)->getClip()->setRepeatCount(AnimationClip::REPEAT_INDEFINITE);
-
 	sprite->createAnimation("animate_sprite_offset", Sprite::ANIMATE_OFFSET, 3, times, offset_values, Curve::SMOOTH)->getClip()->setRepeatCount(AnimationClip::REPEAT_INDEFINITE);
 
-	//Specific frames
-	unsigned int animate_times[] = {0, 100, 200, 300, 400, 500, 600, 700, 800};
-	float animate1_values[] = {
-		96, 0, 16, 16,
-		112, 0, 16, 16,
-		128, 0, 16, 16,
-		144, 0, 16, 16,
-		160, 0, 16, 16,
-		144, 0, 16, 16,
-		128, 0, 16, 16,
-		112, 0, 16, 16
-	};
-	sprite->createAnimation("animate_sprite_specific", Sprite::ANIMATE_FRAME_SPECIFIC, 9, animate_times, animate1_values, Curve::STEP)->getClip()->setRepeatCount(AnimationClip::REPEAT_INDEFINITE);
-
 	//Indexed frames
-	TileSheet* tileSheet = sprite->getTileSheet();
-	unsigned int index = tileSheet->addStrip("lava1", 5);
-	tileSheet->setStripFrame(index, 0, Rectangle(96, 0, 16, 16));
-	tileSheet->setStripFrame(index, 1, Rectangle(112, 0, 16, 16));
-	tileSheet->setStripFrame(index, 2, Rectangle(128, 0, 16, 16));
-	tileSheet->setStripFrame(index, 3, Rectangle(144, 0, 16, 16));
-	tileSheet->setStripFrame(index, 4, Rectangle(160, 0, 16, 16));
-
-	index = tileSheet->addStrip("lava2", 5);
-	tileSheet->setStripFrame(index, 0, Rectangle(176, 0, 16, 16));
-	tileSheet->setStripFrame(index, 1, Rectangle(192, 0, 16, 16));
-	tileSheet->setStripFrame(index, 2, Rectangle(208, 0, 16, 16));
-	tileSheet->setStripFrame(index, 3, Rectangle(224, 0, 16, 16));
-	tileSheet->setStripFrame(index, 4, Rectangle(240, 0, 16, 16));
-
-#define ANIMATE_INDEX 0
-
+	int index = sprite->getTileSheet()->getStripIndex("lava1");
+	unsigned int animate_times[] = {0, 100, 200, 300, 400, 500, 600, 700, 800};
 	float animate2_values[] = {
-		ANIMATE_INDEX, 0,
-		ANIMATE_INDEX, 1,
-		ANIMATE_INDEX, 2,
-		ANIMATE_INDEX, 3,
-		ANIMATE_INDEX, 4,
-		ANIMATE_INDEX, 3,
-		ANIMATE_INDEX, 2,
-		ANIMATE_INDEX, 1
+		index, 0,
+		index, 1,
+		index, 2,
+		index, 3,
+		index, 4,
+		index, 3,
+		index, 2,
+		index, 1
 	};
-
+	
 	sprite->createAnimation("animate_sprite_index", Sprite::ANIMATE_FRAME_INDEX, 9, animate_times, animate2_values, Curve::STEP)->getClip()->setRepeatCount(AnimationClip::REPEAT_INDEFINITE);
 }
 
@@ -89,75 +57,32 @@ void Main::initialize()
 	SAFE_RELEASE(cam);
 	SAFE_RELEASE(camNode);
 
-	//Setup tilesheet
-	Texture* tilesheetTex = Texture::create("res/textures/tilesheet-v1.png");
-	_tilesheet = TileSheet::create("game_tileSheet", tilesheetTex);
-	Texture::Sampler* sampler = _tilesheet->getSpriteBatch()->getSampler();
-	sampler->setFilterMode(Texture::NEAREST, Texture::NEAREST);
-	sampler->setWrapMode(Texture::REPEAT, Texture::REPEAT);
 
 	//Setup map
 	Node* spriteNode = Node::create();
 
-	SpriteGroup* map = SpriteGroup::create("grass_map", 100, 100, _tilesheet);
-	map->setDefaultTile(Rectangle(16, 16));
-	map->setSize(64, 64);
-	//map->setHorzGap(10);
-	//map->setVertGap(10);
-	//setupAnimation(static_cast<Sprite*>(map));
+	SpriteGroup* map = SpriteGroup::create("res/sprites/test.spritegroup");
+	_tilesheet = map->getTileSheet();
+	map->setDefaultTile(_tilesheet->getStripFrame(0, 0));
 
 	spriteNode->setSprite(static_cast<Sprite*>(map));
 
 	_scene->addNode(spriteNode);
-	
+
 	//Setup lava
-	Sprite* sprite = Sprite::create("lava", _tilesheet);
+	Sprite* sprite = map->getSprite(2, 2);
+	setupAnimation(sprite);
 	_aniSprite = sprite;
-	sprite->setSize(64, 64);
-	setupAnimation(sprite);
-	sprite->setDefaultTile(_tilesheet->getStripFrame("lava1", 1));
+	sprite->setDefaultTile(_tilesheet->getStripFrameById("lava1", 1));
 
-	map->setSpriteType(3, 3, SpriteGroup::TYPE_TRANSPARENT);
-	map->setSpriteType(3, 4, SpriteGroup::TYPE_TRANSPARENT);
-	map->setSpriteType(4, 3, SpriteGroup::TYPE_TRANSPARENT);
-	map->setSpriteType(4, 4, SpriteGroup::TYPE_TRANSPARENT);
-	map->setSprite(2, 2, sprite);
-	map->setSprite(2, 3, sprite);
-	map->setSprite(2, 4, sprite);
-	map->setSprite(3, 2, sprite);
-	map->setSprite(4, 2, sprite);
-
-	SAFE_RELEASE(sprite);
+	//Cleanup
 	SAFE_RELEASE(map);
-
-	/*Sprite* sprite = Sprite::create("grass", _tilesheet);
-	sprite->setDefaultTile(Rectangle(16, 16));
-	sprite->setSize(64, 64);
-	setupAnimation(sprite);
-
-	spriteNode->setSprite(sprite);
-
-	_scene->addNode(spriteNode);
-
-	for(int i = 0; i < ceilf(getWidth() / sprite->getWidth()); i++)
-	{
-		Node* spriteNodeClone = spriteNode->clone();
-		SAFE_RELEASE(spriteNode);
-		spriteNode = spriteNodeClone;
-
-		spriteNode->translate(sprite->getWidth(), 0, 0);
-
-		_scene->addNode(spriteNode);
-	}
-	SAFE_RELEASE(sprite);*/
 	SAFE_RELEASE(spriteNode);
-	SAFE_RELEASE(tilesheetTex);
 }
 
 void Main::finalize()
 {
     SAFE_RELEASE(_scene);
-	SAFE_RELEASE(_tilesheet);
 }
 
 void Main::update(float elapsedTime)

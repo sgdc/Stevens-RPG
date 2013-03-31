@@ -1,0 +1,30 @@
+spritegroup testMap
+{
+	tilesheet = res/textures/tilesheet.tiles
+    size = 64,64
+	defaultTile = 16,16
+    groupSize = 100,100
+
+	sprites
+	{
+		spriteUrl
+		{
+			path = res/sprites/lava.sprite
+		}
+	}
+
+	section
+	{
+		type = child
+		id = lava
+
+		region = 2, 2, 3, 3
+	}
+
+	section
+	{
+		type = transparent
+
+		region = 3, 3, 2, 2
+	}
+}

@@ -1,0 +1,102 @@
+tilesheet game_tileSheet
+{
+    path = res/textures/tilesheet-v1.png
+    minFilter = NEAREST
+    magFilter = NEAREST
+
+    strip grass dark
+    {
+        frame
+        {
+            offset = 0,0
+            size = 16,16
+        }
+        frame
+        {
+            offset = 16,0
+            size = 16,16
+        }
+        frame
+        {
+            offset = 32,0
+            size = 16,16
+        }
+    }
+
+    strip grass bright
+    {
+        frame
+        {
+            offset = 48,0
+            size = 16,16
+        }
+        frame
+        {
+            offset = 64,0
+            size = 16,16
+        }
+        frame
+        {
+            offset = 80,0
+            size = 16,16
+        }
+    }
+
+    strip lava1
+    {
+        frame
+        {
+            offset = 96,0
+            size = 16,16
+        }
+        frame
+        {
+            offset = 112,0
+            size = 16,16
+        }
+        frame
+        {
+            offset = 128,0
+            size = 16,16
+        }
+        frame
+        {
+            offset = 144,0
+            size = 16,16
+        }
+        frame
+        {
+            offset = 160,0
+            size = 16,16
+        }
+    }
+
+    strip lava2
+    {
+        frame
+        {
+            offset = 176,0
+            size = 16,16
+        }
+        frame
+        {
+            offset = 192,0
+            size = 16,16
+        }
+        frame
+        {
+            offset = 208,0
+            size = 16,16
+        }
+        frame
+        {
+            offset = 224,0
+            size = 16,16
+        }
+        frame
+        {
+            offset = 240,0
+            size = 16,16
+        }
+    }
+}

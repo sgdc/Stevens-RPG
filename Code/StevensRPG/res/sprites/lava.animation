@@ -1,0 +1,21 @@
+animation animate_sprite_size
+{
+    property = ANIMATE_SIZE
+	keyCount = 3
+	keyTimes = 0 200 400
+	keyValues = 64 64 128 128 64 64
+	curve = STEP
+
+	repeatCount = INDEFINITE
+}
+
+animation animate_sprite_specific
+{
+    property = ANIMATE_FRAME_SPECIFIC
+	keyCount = 9
+	keyTimes = 0 100 200 300 400 500 600 700 800
+	keyValues = 96 0 16 16 112 0 16 16 128 0 16 16 144 0 16 16 160 0 16 16 144 0 16 16 128 0 16 16 112 0 16 16
+	curve = STEP
+
+	repeatCount = INDEFINITE
+}

@@ -1,0 +1,13 @@
+sprite lava
+{
+    tilesheet = res/textures/tilesheet.tiles
+    size = 64,64
+    animation animate_sprite_size
+    {
+        path = res/sprites/lava.animation#animate_sprite_size
+    }
+	animation animate_sprite_specific
+    {
+        path = res/sprites/lava.animation#animate_sprite_specific
+    }
+}

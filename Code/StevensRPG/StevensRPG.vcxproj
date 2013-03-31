@@ -315,7 +315,11 @@
     </None>
     <None Include="game.config" />
     <None Include="icon.png" />
+    <None Include="res\sprites\lava.animation" />
+    <None Include="res\sprites\lava.sprite" />
+    <None Include="res\sprites\map.spritegroup" />
     <None Include="res\textures\tilesheet-v1.png" />
+    <None Include="res\textures\tilesheet.tiles" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp" />
