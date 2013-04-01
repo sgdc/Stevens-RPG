@@ -43,41 +43,15 @@ void Main::initialize()
 	Sprite::setDefaultSpriteOffset(-(Vector2(getWidth(), getHeight()) * 0.5f));
 
 	//Create the scene
-	_scene = Scene::create("game_scene");
+	_scene = Scene::load("res/basic.scene");
 
-	//Setup camera
-	Node* camNode = Node::create("Cam_Node");
-	Camera* cam = Camera::createOrthographic(getWidth(), getHeight(), getAspectRatio(), 0, 1);
-
-	camNode->setCamera(cam);
-
-	_scene->addNode(camNode);
-	_scene->setActiveCamera(cam);
-
-	SAFE_RELEASE(cam);
-	SAFE_RELEASE(camNode);
-
-
-	//Setup map
-	Node* spriteNode = Node::create();
-
-	SpriteGroup* map = SpriteGroup::create("res/sprites/test.spritegroup");
+	SpriteGroup* map = static_cast<SpriteGroup*>(_scene->findNode("Map_Node")->getSprite());
 	_tilesheet = map->getTileSheet();
-	map->setDefaultTile(_tilesheet->getStripFrame(0, 0));
-
-	spriteNode->setSprite(static_cast<Sprite*>(map));
-
-	_scene->addNode(spriteNode);
 
 	//Setup lava
 	Sprite* sprite = map->getSprite(2, 2);
 	setupAnimation(sprite);
 	_aniSprite = sprite;
-	sprite->setDefaultTile(_tilesheet->getStripFrameById("lava1", 1));
-
-	//Cleanup
-	SAFE_RELEASE(map);
-	SAFE_RELEASE(spriteNode);
 }
 
 void Main::finalize()

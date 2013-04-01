@@ -2,6 +2,7 @@ sprite lava
 {
     tilesheet = res/textures/tilesheet.tiles
     size = 64,64
+	defaultTile = TS lava1,1
     animation animate_sprite_size
     {
         path = res/sprites/lava.animation#animate_sprite_size

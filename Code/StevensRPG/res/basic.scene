@@ -1,0 +1,19 @@
+scene game_scene
+{
+	activeCamera = Cam_Node
+
+	node Cam_Node
+	{
+		camera
+		{
+			type = ORTHOGRAPHIC
+			nearPlane = 0
+			farPlane = 1
+		}
+	}
+
+	node Map_Node
+	{
+		sprite = res/sprites/map.spritegroup
+	}
+}

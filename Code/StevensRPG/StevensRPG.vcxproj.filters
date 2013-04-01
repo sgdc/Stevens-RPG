@@ -31,6 +31,9 @@
     <None Include="res\sprites\map.spritegroup">
       <Filter>res\sprites</Filter>
     </None>
+    <None Include="res\basic.scene">
+      <Filter>res</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Main.h">

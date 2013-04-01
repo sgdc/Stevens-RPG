@@ -2,12 +2,12 @@ spritegroup testMap
 {
 	tilesheet = res/textures/tilesheet.tiles
     size = 64,64
-	defaultTile = 16,16
+	defaultTile = TS 0,0
     groupSize = 100,100
 
 	sprites
 	{
-		spriteUrl
+		sprite
 		{
 			path = res/sprites/lava.sprite
 		}
