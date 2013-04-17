@@ -37,6 +37,26 @@ void Main::setupAnimation(Sprite* sprite)
 	sprite->createAnimation("animate_sprite_index", Sprite::ANIMATE_FRAME_INDEX, 9, animate_times, animate2_values, Curve::STEP)->getClip()->setRepeatCount(AnimationClip::REPEAT_INDEFINITE);
 }
 
+/*void lookAt(Node* node, const Vector3& eye, const Vector3& target, const Vector3& up)
+{
+	//From: http://www.gameplay3d.org/forums/viewtopic.php?f=3&t=315
+
+    // Create lookAt matrix
+    Matrix matrix;
+    Matrix::createLookAt(eye, target, up, &matrix);
+
+    // Pull SRT components out of matrix
+    Vector3 scale;
+    Quaternion rotation;
+    Vector3 translation;
+    matrix.decompose(&scale, &rotation, &translation);
+
+    // Set SRT on node
+    node->setScale(scale);
+    node->setTranslation(translation);
+    node->setRotation(rotation);
+}*/
+
 void Main::initialize()
 {
 	//Set default sprite offset
@@ -44,6 +64,8 @@ void Main::initialize()
 
 	//Create the scene
 	_scene = Scene::load("res/basic.scene");
+
+	//lookAt(_scene->getActiveCamera()->getNode(), Vector3(-10, -100, -10), Vector3(), Vector3::unitY());
 
 	SpriteGroup* map = static_cast<SpriteGroup*>(_scene->findNode("Map_Node")->getSprite());
 	_tilesheet = map->getTileSheet();
@@ -59,12 +81,14 @@ void Main::finalize()
     SAFE_RELEASE(_scene);
 }
 
+#define MOVEMENT_DELTA 1
+
 void Main::update(float elapsedTime)
 {
 	//TODO
 	if(!_cameraMovement.isZero() && elapsedTime != 0)
 	{
-		_scene->getActiveCamera()->getNode()->translate(_cameraMovement * elapsedTime);
+		_scene->getActiveCamera()->getNode()->translate((_cameraMovement * (MOVEMENT_DELTA / _cameraMovement.length())) * elapsedTime);
 	}
 }
 
@@ -91,8 +115,6 @@ bool Main::drawScene(Node* node)
 	}
 	return true;
 }
-
-#define MOVEMENT_DELTA 1
 
 void Main::keyEvent(Keyboard::KeyEvent evt, int key)
 {
