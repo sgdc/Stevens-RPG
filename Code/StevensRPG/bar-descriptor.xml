@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <qnx xmlns="http://www.qnx.com/schemas/application/1.0">
 
-<!-- BlackBerry Tablet OS application descriptor file.
+<!-- BlackBerry OS application descriptor file.
 
-    Specifies parameters for identifying, installing, and launching native applications on BlackBerry Tablet OS.
+    Specifies parameters for identifying, installing, and launching native applications on BlackBerry OS.
 
 -->
 
-    <!-- A universally unique application identifier. Must be unique across all BlackBerry Tablet OS applications.
+    <!-- A universally unique application identifier. Must be unique across all BlackBerry OS applications.
          Using a reverse DNS-style name as the id is recommended. (Eg. com.example.ExampleApplication.) Required. -->
     <id>com.sgdc.stevens_rpg</id>
 
-    <!-- The name that is displayed in the BlackBerry Tablet OS application installer. 
+    <!-- The name that is displayed in the BlackBerry OS application installer. 
          May have multiple values for each language. See samples or xsd schema file. Optional. -->
     <name>Stevens RPG</name>
 
@@ -24,7 +24,7 @@
          <versionNumber> element.  Must be an integer from 0 to 2^16-1 -->
     <buildId>1</buildId>
 
-    <!-- Description, displayed in the BlackBerry Tablet OS application installer.
+    <!-- Description, displayed in the BlackBerry OS application installer.
          May have multiple values for each language. See samples or xsd schema file. Optional. -->
     <description>Stevens Institute of Technology; a school of engineers, scientists, and a lack of female students. You have one goal, graduate.</description>
 
@@ -41,7 +41,6 @@
         <transparent>false</transparent>
     </initialWindow>
 
-    <!-- The category where the application appears. Either core.games or core.media. -->
     <category>core.games</category>
 
     <asset path="icon.png">icon.png</asset>
@@ -76,7 +75,7 @@
        <asset path="Simulator-Coverage/StevensRPG" entry="true" type="Qnx/Elf">StevensRPG</asset>
     </configuration>
 
-    <!-- The icon for the application, which should be 150x150. -->
+    <!-- The icon for the application, which should be 114x114. -->
     <icon>
         <image>icon.png</image>
     </icon>

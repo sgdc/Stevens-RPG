@@ -303,7 +303,7 @@
 			attributes = {
 				LastUpgradeCheck = 0450;
 			};
-			buildConfigurationList = 42C932B61491A0DB0098216A /* Build configuration list for PBXProject "gameplay-template" */;
+			buildConfigurationList = 42C932B61491A0DB0098216A /* Build configuration list for PBXProject "template" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -524,7 +524,7 @@
 					"../../GamePlay/external-deps/oggvorbis/include",
 				);
 				INFOPLIST_FILE = "StevensRPG-ios.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../GamePlay/external-deps/bullet/lib/ios/$(CURRENT_ARCH)\"",
@@ -557,7 +557,7 @@
 					"../../GamePlay/external-deps/oggvorbis/include",
 				);
 				INFOPLIST_FILE = "StevensRPG-ios.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../GamePlay/external-deps/bullet/lib/ios/$(CURRENT_ARCH)\"",
@@ -577,7 +577,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		42C932B61491A0DB0098216A /* Build configuration list for PBXProject "gameplay-template" */ = {
+		42C932B61491A0DB0098216A /* Build configuration list for PBXProject "template" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				42C932D81491A0DB0098216A /* Debug */,
