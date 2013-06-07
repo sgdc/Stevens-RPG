@@ -22,7 +22,7 @@ VORBIS_PATH := ../../../GamePlay/external-deps/oggvorbis/lib/android/arm
 OPENAL_PATH := ../../../GamePlay/external-deps/openal/lib/android/arm
 
 # gameplay
-LOCAL_PATH := ../../../GamePlay/gameplay/android/obj/local/armeabi
+LOCAL_PATH := ../../../GamePlay/gameplay/android/obj/local/armeabi-v7a
 include $(CLEAR_VARS)
 LOCAL_MODULE    := libgameplay
 LOCAL_SRC_FILES := libgameplay.a
