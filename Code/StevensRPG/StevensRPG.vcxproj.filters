@@ -5,33 +5,24 @@
     </Filter>
     <Filter Include="src">
     </Filter>
-    <Filter Include="res\textures">
-      <UniqueIdentifier>{12973e79-320e-40d5-b201-f52f363fe8ae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="res\sprites">
-      <UniqueIdentifier>{1fc09417-7106-4212-9210-7c9056781940}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
 	<None Include="game.config" />
     <None Include="icon.png" />
     <None Include="bar-descriptor.xml" />
-    <None Include="res\textures\tilesheet-v1.png">
-      <Filter>res\textures</Filter>
+    <None Include="res\box.fbx">
+      <Filter>res</Filter>
     </None>
-    <None Include="res\textures\tilesheet.tiles">
-      <Filter>res\textures</Filter>
+    <None Include="res\box.gpb">
+      <Filter>res</Filter>
     </None>
-    <None Include="res\sprites\lava.sprite">
-      <Filter>res\sprites</Filter>
+    <None Include="res\box.material">
+      <Filter>res</Filter>
     </None>
-    <None Include="res\sprites\lava.animation">
-      <Filter>res\sprites</Filter>
+    <None Include="res\colored.frag">
+      <Filter>res</Filter>
     </None>
-    <None Include="res\sprites\map.spritegroup">
-      <Filter>res\sprites</Filter>
-    </None>
-    <None Include="res\basic.scene">
+    <None Include="res\colored.vert">
       <Filter>res</Filter>
     </None>
   </ItemGroup>

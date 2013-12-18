@@ -51,20 +51,20 @@ protected:
 
 private:
 
-	void setupAnimation(Sprite* sprite);
+    void setupAnimation(Sprite* sprite);
 
     /**
      * Draws the scene each frame.
      */
     bool drawScene(Node* node);
 
-	bool rotateLeft(Node* node);
-	bool rotateRight(Node* node);
+    bool rotateLeft(Node* node);
+    bool rotateRight(Node* node);
 
     Scene* _scene;
-	TileSheet* _tilesheet;
-	Vector3 _cameraMovement;
-	Sprite* _aniSprite;
+    TileSheet* _tilesheet;
+    Vector3 _cameraMovement;
+    Sprite* _aniSprite;
 };
 
 #endif
