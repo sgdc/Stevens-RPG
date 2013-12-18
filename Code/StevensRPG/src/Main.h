@@ -63,7 +63,7 @@ private:
 
     Scene* _scene;
     TileSheet* _tilesheet;
-    Vector3 _cameraMovement;
+	int _cameraMovementKeys;
     Sprite* _aniSprite;
 };
 

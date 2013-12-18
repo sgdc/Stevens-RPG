@@ -4,7 +4,7 @@
 Main game;
 
 Main::Main()
-    : _scene(NULL), _tilesheet(NULL), _cameraMovement()
+	: _scene(NULL), _tilesheet(NULL), _cameraMovementKeys(0)
 {
 }
 
@@ -82,13 +82,34 @@ void Main::finalize()
 }
 
 #define MOVEMENT_DELTA 1
+#define MOVEMENT_KEY_LEFT 0x1
+#define MOVEMENT_KEY_RIGHT 0x2
+#define MOVEMENT_KEY_UP 0x4
+#define MOVEMENT_KEY_DOWN 0x8
 
 void Main::update(float elapsedTime)
 {
     //TODO
-    if(!_cameraMovement.isZero() && elapsedTime != 0)
+	Vector3 movement = Vector3::zero();
+	if (_cameraMovementKeys & MOVEMENT_KEY_LEFT)
+	{
+		movement.x -= MOVEMENT_DELTA;
+	}
+	if (_cameraMovementKeys & MOVEMENT_KEY_RIGHT)
+	{
+		movement.x += MOVEMENT_DELTA;
+	}
+	if (_cameraMovementKeys & MOVEMENT_KEY_UP)
+	{
+		movement.y += MOVEMENT_DELTA;
+	}
+	if (_cameraMovementKeys & MOVEMENT_KEY_DOWN)
+	{
+		movement.y -= MOVEMENT_DELTA;
+	}
+	if (!movement.isZero() && elapsedTime != 0)
     {
-        _scene->getActiveCamera()->getNode()->translate((_cameraMovement * (MOVEMENT_DELTA / _cameraMovement.length())) * elapsedTime);
+		_scene->getActiveCamera()->getNode()->translate((movement * (MOVEMENT_DELTA / movement.length())) * elapsedTime);
     }
 }
 
@@ -127,16 +148,16 @@ void Main::keyEvent(Keyboard::KeyEvent evt, int key)
                 exit();
                 break;
             case Keyboard::KEY_DOWN_ARROW:
-                _cameraMovement.y -= MOVEMENT_DELTA;
+				_cameraMovementKeys |= MOVEMENT_KEY_DOWN;
                 break;
             case Keyboard::KEY_UP_ARROW:
-                _cameraMovement.y += MOVEMENT_DELTA;
+				_cameraMovementKeys |= MOVEMENT_KEY_UP;
                 break;
             case Keyboard::KEY_LEFT_ARROW:
-                _cameraMovement.x -= MOVEMENT_DELTA;
+				_cameraMovementKeys |= MOVEMENT_KEY_LEFT;
                 break;
             case Keyboard::KEY_RIGHT_ARROW:
-                _cameraMovement.x += MOVEMENT_DELTA;
+				_cameraMovementKeys |= MOVEMENT_KEY_RIGHT;
                 break;
             case Keyboard::KEY_R:
                 _scene->visit(this, &Main::rotateLeft);
@@ -186,16 +207,16 @@ void Main::keyEvent(Keyboard::KeyEvent evt, int key)
         switch (key)
         {
             case Keyboard::KEY_DOWN_ARROW:
-                _cameraMovement.y += MOVEMENT_DELTA;
+				_cameraMovementKeys &= ~MOVEMENT_KEY_DOWN;
                 break;
             case Keyboard::KEY_UP_ARROW:
-                _cameraMovement.y -= MOVEMENT_DELTA;
+				_cameraMovementKeys &= ~MOVEMENT_KEY_UP;
                 break;
             case Keyboard::KEY_LEFT_ARROW:
-                _cameraMovement.x += MOVEMENT_DELTA;
+				_cameraMovementKeys &= ~MOVEMENT_KEY_LEFT;
                 break;
             case Keyboard::KEY_RIGHT_ARROW:
-                _cameraMovement.x -= MOVEMENT_DELTA;
+				_cameraMovementKeys &= ~MOVEMENT_KEY_RIGHT;
                 break;
         }
     }
